@@ -23,7 +23,6 @@ const resolvers = {
     hour() {
       const hour = new Date();
       const formattedHour = format((hour), "HH ':' mm");
-      // const formattedMinute = format((hour))
       return formattedHour;
     }
   }
