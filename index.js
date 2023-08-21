@@ -13,6 +13,13 @@ const typeDefs = gql`
     vip: Boolean
   }
 
+  type Product {
+    name: String!
+    price: Float!
+    discount: Float
+    priceWithDiscount: Float
+  }
+
   # Pontos de entrada da API
   type Query {
     hello: String!
@@ -20,6 +27,7 @@ const typeDefs = gql`
     hour: String!
     newDate: Date
     userLogged: User
+    emphasisProduct: Product!
   }
 `;
 
@@ -27,6 +35,13 @@ const resolvers = {
   User: {
     salary(user) {
       return user.real_salary
+    }
+  },
+  Product: {
+    priceWithDiscount(product) {
+      const result = product.price - product.discount;
+      console.log(result);
+      return result;
     }
   },
   Query: {
@@ -52,6 +67,15 @@ const resolvers = {
         real_salary: 1234.56,
         vip: true
       }
+    },
+    emphasisProduct() {
+      const product = {
+        name: "Xbox Series X",
+        price: 4159.99,
+        discount: 159.99,
+      };
+      console.log(product);
+      return product;
     }
   }
 };
