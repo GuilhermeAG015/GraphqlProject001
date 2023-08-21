@@ -39,9 +39,10 @@ const resolvers = {
   },
   Product: {
     priceWithDiscount(product) {
-      const result = product.price - product.discount;
-      console.log(result);
-      return result;
+      const { price, discount } = product;
+      const percent = discount / 100;
+      const result =  price - (price * percent);
+      return result.toFixed(2);
     }
   },
   Query: {
@@ -58,7 +59,7 @@ const resolvers = {
       const formattedHour = format((hour), "HH ':' mm");
       return formattedHour;
     },
-    userLogged(user) {
+    userLogged() {
       return {
         id: 1,
         name: 'Test Web',
@@ -72,9 +73,8 @@ const resolvers = {
       const product = {
         name: "Xbox Series X",
         price: 4159.99,
-        discount: 159.99,
+        discount: 10,
       };
-      console.log(product);
       return product;
     }
   }
@@ -83,7 +83,6 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-
 });
 
 server.listen().then(({ url }) => {
