@@ -1,6 +1,27 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { format } = require('date-fns');
 
+const users = [
+  {
+    id: 11,
+    name: 'Test One',
+    email: 'testone@email.com',
+    age: 21,
+  },
+  {
+    id: 12,
+    name: "Test Two",
+    email: 'testtwo@email.com',
+    age: 22,
+  },
+  {
+    id: 13,
+    name: 'Test Three',
+    email: 'testthree@email.com',
+    age: 23,
+  }
+]
+
 const typeDefs = gql`
   scalar Date
 
@@ -29,6 +50,8 @@ const typeDefs = gql`
     userLogged: User
     emphasisProduct: Product!
     numbers: [Int!]! # Retornará um Array obrigatóriamente e será obrigatóriamente de int
+    users: [User]!
+    user(id: ID): User
   }
 `;
 
@@ -82,7 +105,14 @@ const resolvers = {
       const numbers = Array(6).fill(0).map(() => Math.floor(Math.random() * 60));
       const cres = (a, b) => a - b;
       return numbers.sort(cres);
-    }
+    },
+    users() {
+      return users;
+    },
+    user(_, { id }) {
+      const selected = users.filter((e) => e.id === Number(id));
+      return (selected) ? selected[0] : null; 
+    },
   }
 };
 
