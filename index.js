@@ -28,6 +28,7 @@ const typeDefs = gql`
     newDate: Date
     userLogged: User
     emphasisProduct: Product!
+    numbers: [Int!]! # Retornará um Array obrigatóriamente e será obrigatóriamente de int
   }
 `;
 
@@ -76,6 +77,11 @@ const resolvers = {
         discount: 10,
       };
       return product;
+    },
+    numbers() {
+      const numbers = Array(6).fill(0).map(() => Math.floor(Math.random() * 60));
+      const cres = (a, b) => a - b;
+      return numbers.sort(cres);
     }
   }
 };
