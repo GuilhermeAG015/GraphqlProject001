@@ -1,0 +1,21 @@
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    age: Int
+    salary: Float
+    vip: Boolean
+    profile: Profile
+    status: UserStatus
+}
+
+type Profile {
+    id: Int!
+    name: String!
+}
+
+enum UserStatus {
+    ATIVO
+    INATIVO
+    BLOQUEADO
+}
