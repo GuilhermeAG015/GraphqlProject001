@@ -1,0 +1,19 @@
+#import User, Profile from 'user.graphql'
+#import Product from 'product.graphql'
+
+scalar Date
+
+# Pontos de entrada da API
+type Query {
+    hello: String!
+    date: String!
+    hour: String!
+    newDate: Date
+    userLogged: User
+    emphasisProduct: Product!
+    numbers: [Int!]! # Retornará um Array obrigatóriamente e será obrigatóriamente de int
+    users: [User]!
+    user(id: ID): User
+    profiles: [Profile]
+    profilesById(id: Int): Profile 
+}
