@@ -20,7 +20,18 @@ const users = [
     email: 'testthree@email.com',
     age: 23,
   }
-]
+];
+
+const profiles = [
+  {
+    id: 1,
+    name: 'Common',
+  },
+  {
+    id: 2,
+    name: 'administrator',
+  },
+];
 
 const typeDefs = gql`
   scalar Date
@@ -41,6 +52,11 @@ const typeDefs = gql`
     priceWithDiscount: Float
   }
 
+  type Profile {
+    id: Int!
+    name: String!
+  }
+
   # Pontos de entrada da API
   type Query {
     hello: String!
@@ -52,6 +68,8 @@ const typeDefs = gql`
     numbers: [Int!]! # Retornará um Array obrigatóriamente e será obrigatóriamente de int
     users: [User]!
     user(id: ID): User
+    profiles: [Profile]
+    profilesById(id: Int): Profile 
   }
 `;
 
@@ -113,6 +131,13 @@ const resolvers = {
       const selected = users.filter((e) => e.id === Number(id));
       return (selected) ? selected[0] : null; 
     },
+    profiles() {
+      return profiles;
+    },
+    profilesById(_, { id }) {
+      const selected = profiles.filter((e) => e.id === id);
+      return (selected) ? selected[0] : null;
+    }
   }
 };
 
